@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.survey.data.CategoryRepository;
 import org.example.survey.dto.request.CategoryRequestDto;
 import org.example.survey.dto.response.CategoryResponseDto;
+import org.example.survey.exception.user.UserNotFoundException;
 import org.example.survey.mapper.CategoryMapper;
 import org.example.survey.model.Category;
 import org.example.survey.service.CategoryService;
@@ -23,24 +24,39 @@ public class CategoryServiceImplementation implements CategoryService {
     private final CategoryRepository categoryRepository ;
 
     @Override
-    public CategoryResponseDto add(CategoryRequestDto categoryRequestDto) {
+    public Optional<CategoryResponseDto>  add(CategoryRequestDto categoryRequestDto) {
         Category category = categoryMapper.categoryRequestDtoToCategory(categoryRequestDto);
         Category categoryReturned = categoryRepository.save(category);
-        return  categoryMapper.categoryToCategoryResponseDto(categoryReturned);
+        return Optional.of(categoryMapper.categoryToCategoryResponseDto(categoryReturned));
     }
 
     @Override
-    public CategoryResponseDto update(CategoryRequestDto categoryRequestDto) {
-        Category category = categoryMapper.categoryRequestDtoToCategory(categoryRequestDto);
-        if(categoryRepository.findById(category.getCategoryId()).isPresent()) {
-            Category categoryUpdated = categoryRepository.save(category);
-            return categoryMapper.categoryToCategoryResponseDto(categoryUpdated);
+    public Optional<CategoryResponseDto> updatePartially(Integer categoryId, CategoryRequestDto categoryRequestDto) throws UserNotFoundException {
+
+        Optional<Category> category = categoryRepository.findByCategoryId(categoryId);
+        if(category.isPresent()){
+            category.get().setLabel(categoryRequestDto.label());
+            category.get().setNumberOfQuestion(categoryRequestDto.numberOfQuestion());
+            Category categorySaved =  categoryRepository.save(category.get());
+            return Optional.of(categoryMapper.categoryToCategoryResponseDto(categorySaved));
         }
-        return null ;
+        throw new  UserNotFoundException("The user does not exist");
     }
 
     @Override
-    public void delete(CategoryRequestDto categoryRequestDto) {
+    public Optional<CategoryResponseDto> update(Integer categoryId ,CategoryRequestDto categoryRequestDto) throws UserNotFoundException {
+        Optional<Category> category = categoryRepository.findByCategoryId(categoryId);
+        if(category.isPresent()){
+            category.get().setLabel(categoryRequestDto.label());
+            category.get().setNumberOfQuestion(categoryRequestDto.numberOfQuestion());
+            Category categorySaved =  categoryRepository.save(category.get());
+            return Optional.of(categoryMapper.categoryToCategoryResponseDto(categorySaved));
+        }
+        throw new  UserNotFoundException("The user does not exist");
+    }
+
+    @Override
+    public void delete(CategoryRequestDto categoryRequestDto) throws UserNotFoundException {
         Category category = categoryMapper.categoryRequestDtoToCategory(categoryRequestDto);
         if(categoryRepository.findById(category.getCategoryId()).isPresent()){
             categoryRepository.delete(category);
@@ -54,7 +70,7 @@ public class CategoryServiceImplementation implements CategoryService {
     }
 
     @Override
-    public Optional<CategoryResponseDto>  findById(Integer id) {
+    public Optional<CategoryResponseDto>  findById(Integer id) throws UserNotFoundException {
 
         if(categoryRepository.findById(id).isPresent()){
             CategoryResponseDto categoryResponse = categoryMapper.categoryToCategoryResponseDto(categoryRepository.findById(id).get());
