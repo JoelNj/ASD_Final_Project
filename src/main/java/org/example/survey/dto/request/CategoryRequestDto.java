@@ -1,4 +1,4 @@
 package org.example.survey.dto.request;
 
-public record CategoryRequestDto(Integer categoryId,String label,Integer numberOfQuestion ) {
+public record CategoryRequestDto(String label,Integer numberOfQuestion ) {
 }
