@@ -1,4 +1,7 @@
 package org.example.survey.data;
 
-public interface AnswerRepository {
+import org.example.survey.model.Answer;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AnswerRepository extends JpaRepository<Answer,Long> {
 }

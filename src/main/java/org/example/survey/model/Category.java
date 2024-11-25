@@ -4,9 +4,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Generated;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @Entity
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Data
 public class Category {
 
@@ -15,6 +18,9 @@ public class Category {
     private Integer categoryId;
     private String label;
     private Integer numberOfQuestion;
+
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Question> questions;
 
     public Category(String label, Integer numberOfQuestion) {
         this.label = label;

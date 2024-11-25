@@ -1,7 +1,13 @@
-package org.example.survey.dto.request;
+package org.example.survey.dto;
 
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import org.example.survey.model.Category;
 
-public record QuestionRequestDto(String questionText, Boolean hasAnswer, CategoryRequestDto categoryRequestDto,
-                                 Category category) {
+public record QuestionDto(Long questionId,
+                          String questionText,
+                          Boolean hasAnswer,
+                          CategoryDto category)
+{
 }
+

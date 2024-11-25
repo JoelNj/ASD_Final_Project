@@ -2,8 +2,7 @@ package org.example.survey.service.implementation;
 
 import lombok.RequiredArgsConstructor;
 import org.example.survey.data.CategoryRepository;
-import org.example.survey.dto.request.CategoryRequestDto;
-import org.example.survey.dto.response.CategoryResponseDto;
+import org.example.survey.dto.CategoryDto;
 import org.example.survey.exception.user.CategoryNotFoundException;
 import org.example.survey.mapper.CategoryMapper;
 import org.example.survey.model.Category;
@@ -23,36 +22,36 @@ public class CategoryServiceImplementation implements CategoryService {
     private final CategoryRepository categoryRepository ;
 
     @Override
-    public Optional<CategoryResponseDto>  add(CategoryRequestDto categoryRequestDto) {
-        Category category = categoryMapper.categoryRequestDtoToCategory(categoryRequestDto);
+    public Optional<CategoryDto>  add(CategoryDto categoryDto) {
+        Category category = categoryMapper.categoryDtoToCategory(categoryDto);
         Category categoryReturned = categoryRepository.save(category);
-        return Optional.of(categoryMapper.categoryToCategoryResponseDto(categoryReturned));
+        return Optional.of(categoryMapper.categoryToCategoryDto(categoryReturned));
     }
 
     @Override
-    public Optional<CategoryResponseDto> updatePartially(Integer categoryId, CategoryRequestDto categoryRequestDto) throws CategoryNotFoundException {
+    public Optional<CategoryDto> updatePartially(Integer categoryId, CategoryDto categoryDto) throws CategoryNotFoundException {
         Optional<Category> category = categoryRepository.findByCategoryId(categoryId);
         if(category.isPresent()){
-            if(categoryRequestDto.label()!=null){
-                category.get().setLabel(categoryRequestDto.label());
+            if(categoryDto.label()!=null){
+                category.get().setLabel(categoryDto.label());
             }
-            if(categoryRequestDto.numberOfQuestion()!=null){
-                category.get().setNumberOfQuestion(categoryRequestDto.numberOfQuestion());
+            if(categoryDto.numberOfQuestion()!=null){
+                category.get().setNumberOfQuestion(categoryDto.numberOfQuestion());
             }
             Category categorySaved =  categoryRepository.save(category.get());
-            return Optional.of(categoryMapper.categoryToCategoryResponseDto(categorySaved));
+            return Optional.of(categoryMapper.categoryToCategoryDto(categorySaved));
         }
         throw new CategoryNotFoundException("Category not found");
     }
 
     @Override
-    public Optional<CategoryResponseDto> update(Integer categoryId ,CategoryRequestDto categoryRequestDto) throws CategoryNotFoundException {
+    public Optional<CategoryDto> update(Integer categoryId ,CategoryDto categoryDto) throws CategoryNotFoundException {
         Optional<Category> category = categoryRepository.findByCategoryId(categoryId);
         if(category.isPresent()){
-            category.get().setLabel(categoryRequestDto.label());
-            category.get().setNumberOfQuestion(categoryRequestDto.numberOfQuestion());
+            category.get().setLabel(categoryDto.label());
+            category.get().setNumberOfQuestion(categoryDto.numberOfQuestion());
             Category categorySaved =  categoryRepository.save(category.get());
-            return Optional.of(categoryMapper.categoryToCategoryResponseDto(categorySaved));
+            return Optional.of(categoryMapper.categoryToCategoryDto(categorySaved));
         }
         throw new CategoryNotFoundException("Category not found");
     }
@@ -63,20 +62,23 @@ public class CategoryServiceImplementation implements CategoryService {
         if(categoryToDelete.isPresent()){
             categoryRepository.delete(categoryToDelete.get());
         }
-        throw new CategoryNotFoundException("Categor not found ");
+        else{
+            throw new CategoryNotFoundException("Category not found ");
+        }
     }
 
     @Override
-    public List<CategoryResponseDto> displayAll() {
+    public List<CategoryDto> displayAll() {
         return categoryRepository.findAll().stream().sorted(Comparator.comparing(Category::getLabel))
-                                 .map(categoryMapper::categoryToCategoryResponseDto).toList();
+                                 .map(categoryMapper::categoryToCategoryDto).toList();
     }
 
+
     @Override
-    public Optional<CategoryResponseDto>  findById(Integer id) throws CategoryNotFoundException {
-        if(categoryRepository.findById(id).isPresent()){
-            CategoryResponseDto categoryResponseDto = categoryMapper.categoryToCategoryResponseDto(categoryRepository.findById(id).get());
-            return Optional.of(categoryResponseDto);
+    public Optional<CategoryDto> findByCategoryId(Integer categoryId) throws CategoryNotFoundException {
+        Optional<Category> categoryDtoFromb = categoryRepository.findByCategoryId(categoryId);
+        if(categoryDtoFromb.isPresent()){
+            return Optional.of(categoryMapper.categoryToCategoryDto(categoryDtoFromb.get()));
         }
         throw  new CategoryNotFoundException("Category not found message ");
     }

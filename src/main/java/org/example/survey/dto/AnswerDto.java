@@ -1,11 +1,11 @@
-package org.example.survey.dto.request;
+package org.example.survey.dto;
 
-import org.example.survey.model.Question;
-
-public record AnswerRequestDto(String responseText,
-                               Boolean isTrue,
-                               QuestionRequestDto question
-                               ) {
+public record AnswerDto(Long responseId,
+                        String responseText,
+                        Boolean isTrue,
+                        QuestionDto question
+                       )
+{
 }
 
 

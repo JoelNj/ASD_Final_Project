@@ -1,6 +1,6 @@
-package org.example.survey.dto.request;
+package org.example.survey.dto;
 
-public record CategoryRequestDto(String label,
-                                 Integer numberOfQuestion
+public record CategoryDto(Integer categoryId,String label,
+                          Integer numberOfQuestion
                                  ) {
 }
