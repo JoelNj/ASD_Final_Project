@@ -63,9 +63,9 @@ public class AnswerServiceImplementation  implements AnswerService {
     }
 
     @Override
-    public Optional<Void> deleteAnswer(Long answerId) throws AnswerNotFoundException {
+    public void deleteAnswer(Long answerId) throws AnswerNotFoundException {
         Optional<Answer> answerTODelete = answerRepository.findById(answerId);
-        if ( answerTODelete.isPresent()) {
+        if ( answerTODelete.isPresent() ) {
             answerRepository.delete(answerTODelete.get());
         }
         throw new AnswerNotFoundException("Answer not found ");
@@ -73,8 +73,17 @@ public class AnswerServiceImplementation  implements AnswerService {
 
     @Override
     public Optional<List<AnswerDto>> getAllAnswers() {
-        List<AnswerDto> answers = answerRepository.findAll().stream().sorted(Comparator.comparing(Answer::getResponseText))
+        List<AnswerDto> answers = answerRepository.findAll().stream()
                 .map(answerMapper::answerToAnswerDto).toList();
         return Optional.of(answers);
+    }
+
+    @Override
+    public Optional<AnswerDto> getOneAnswer(Long questionId) throws AnswerNotFoundException {
+        Optional<Answer> answerFromDB = answerRepository.findById(questionId);
+        if(answerFromDB.isPresent()){
+            return Optional.of(answerMapper.answerToAnswerDto(answerFromDB.get()));
+        }
+        throw new AnswerNotFoundException("Answer not found ");
     }
 }

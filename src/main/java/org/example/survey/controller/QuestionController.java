@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/category/{categoryId}/question")
+@RequestMapping("/api/v1/categories/{categoryId}/questions")
 @RequiredArgsConstructor
 public class QuestionController {
 
@@ -60,14 +60,13 @@ public class QuestionController {
         return ResponseEntity.status(HttpStatus.OK).body(questionService.getAllQuestions().get());
     }
 
-//    @GetMapping("/{questionId}")
-//    public ResponseEntity<CategoryDto> getOneQuestion(@PathVariable Long questionId) throws CategoryNotFoundException {
-//        Optional<QuestionDto> categoryDtoFromDb = questionService.get
-//        if(categoryDtoFromDb.isPresent()){
-//            return ResponseEntity.ok(categoryDtoFromDb.get());
-//        }
-//        throw  new CategoryNotFoundException("Category not found");
-//
-//    }
+    @GetMapping("/{questionId}")
+    public ResponseEntity<QuestionDto> getOneQuestion(@PathVariable Long questionId) throws QuestionNotFoundException {
+        Optional<QuestionDto> questionDtoFromDb = questionService.getOneQuestion(questionId);
+        if(questionDtoFromDb.isPresent()){
+            return ResponseEntity.status(HttpStatus.OK).body(questionDtoFromDb.get());
+        }
+       throw  new QuestionNotFoundException("Question not found");
+    }
 
 }

@@ -4,6 +4,7 @@ package org.example.survey.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.survey.dto.AnswerDto;
 import org.example.survey.dto.QuestionDto;
+import org.example.survey.exception.user.AnswerNotFoundException;
 import org.example.survey.exception.user.CategoryNotFoundException;
 import org.example.survey.service.AnswerService;
 import org.springframework.http.HttpStatus;
@@ -14,13 +15,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/category/{categoryId}/question/{questionId}/answer")
+@RequestMapping("/api/v1/categories/{categoryId}/questions/{questionId}/answers")
 @RequiredArgsConstructor
 public class AnswerController {
 
     private final AnswerService answerService;
     @PostMapping
-    public ResponseEntity<AnswerDto> addAnswer(@PathVariable Long questionId, AnswerDto answerDto){
+    public ResponseEntity<AnswerDto> addAnswer(@PathVariable Long questionId, @RequestBody AnswerDto answerDto){
         Optional<AnswerDto> answerCreated = answerService.addAnswer(questionId, answerDto);
         if(answerCreated .isPresent()){
             return ResponseEntity.status(HttpStatus.CREATED).body(answerCreated.get());
@@ -55,5 +56,13 @@ public class AnswerController {
     @GetMapping
     public ResponseEntity<List<AnswerDto>> getAllQuestions(){
         return ResponseEntity.status(HttpStatus.OK).body(answerService.getAllAnswers().get());
+    }
+    @GetMapping("/{answerId}")
+    public ResponseEntity<AnswerDto> getOneAnswer(@PathVariable Long answerId) throws AnswerNotFoundException {
+        Optional<AnswerDto> answerDtoFromDb = answerService.getOneAnswer(answerId);
+        if(answerDtoFromDb.isPresent()){
+            return ResponseEntity.status(HttpStatus.OK).body(answerDtoFromDb.get());
+        }
+        throw  new AnswerNotFoundException("Answer not found");
     }
 }

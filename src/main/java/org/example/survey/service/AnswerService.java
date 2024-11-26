@@ -8,8 +8,9 @@ import java.util.Optional;
 
 public interface AnswerService {
     Optional<AnswerDto> addAnswer(Long questionId, AnswerDto answerDto);
-    Optional<AnswerDto> updateAnswer(Long questionId, Long answerId,AnswerDto answerRequestDto) throws AnswerNotFoundException;
-    Optional<AnswerDto> updateAnswerPartially(Long questionId, Long answerId,AnswerDto answerRequestDto) throws AnswerNotFoundException;
-    Optional<Void> deleteAnswer(Long answerId) throws AnswerNotFoundException;
+    Optional<AnswerDto> updateAnswer(Long questionId, Long answerId,AnswerDto answerDto) throws AnswerNotFoundException;
+    Optional<AnswerDto> updateAnswerPartially(Long questionId, Long answerId,AnswerDto answerDto) throws AnswerNotFoundException;
+    void deleteAnswer(Long answerId) throws AnswerNotFoundException;
     Optional<List<AnswerDto>> getAllAnswers();
+    Optional<AnswerDto> getOneAnswer(Long questionId) throws AnswerNotFoundException;
 }

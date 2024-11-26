@@ -87,4 +87,14 @@ public class QuestionServiceImplementation implements QuestionService {
         return Optional.of(questionRepository.findAll().stream()
                         . map(questionMapper::questionToQuestionDto).toList()) ;
     }
+
+    @Override
+    public Optional<QuestionDto> getOneQuestion(Long questionId) throws QuestionNotFoundException {
+
+        Optional<Question> questionFromDB = questionRepository.findById(questionId);
+        if(questionFromDB.isPresent()){
+            return Optional.of(questionMapper.questionToQuestionDto(questionFromDB.get()));
+        }
+        throw new QuestionNotFoundException("Question not found");
+    }
 }
