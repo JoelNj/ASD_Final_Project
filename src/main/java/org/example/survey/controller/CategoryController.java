@@ -3,7 +3,6 @@ package org.example.survey.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.survey.dto.CategoryDto;
-import org.example.survey.exception.user.CategoryNotFoundException;
 import org.example.survey.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

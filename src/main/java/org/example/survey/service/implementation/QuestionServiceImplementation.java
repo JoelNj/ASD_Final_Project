@@ -4,15 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.example.survey.data.CategoryRepository;
 import org.example.survey.data.QuestionRepository;
 import org.example.survey.dto.QuestionDto;
-import org.example.survey.exception.user.QuestionNotFoundException;
-import org.example.survey.mapper.CategoryMapper;
+import org.example.survey.exception.user.RessourceNotFoundException;
 import org.example.survey.mapper.QuestionMapper;
 import org.example.survey.model.Category;
 import org.example.survey.model.Question;
 import org.example.survey.service.QuestionService;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +35,7 @@ public class QuestionServiceImplementation implements QuestionService {
 
     @Override
     public Optional<QuestionDto> updateQuestion(Integer categoryId,Long questionId,
-                                                        QuestionDto questionDto)  throws QuestionNotFoundException {
+                                                        QuestionDto questionDto)  throws RessourceNotFoundException {
         Category  category = categoryRepository.findById(categoryId).get();
         Optional<Question> questionFromDatabase = questionRepository.findById(questionId);
         if(questionFromDatabase.isPresent()){
@@ -47,12 +45,12 @@ public class QuestionServiceImplementation implements QuestionService {
             Question questionUpdated = questionRepository.save(questionFromDatabase.get());
             return Optional.of(questionMapper.questionToQuestionDto(questionUpdated));
         }
-        throw new QuestionNotFoundException("Question not found");
+        throw new RessourceNotFoundException("Question not found");
     }
 
     @Override
     public Optional<QuestionDto> updatePartiallyQuestion(Integer categoryId,Long questionId,
-                                                                 QuestionDto questionDto) throws QuestionNotFoundException {
+                                                                 QuestionDto questionDto) throws RessourceNotFoundException {
         Optional<Question> questionFromDatabase = questionRepository.findById(questionId);
         Category category = categoryRepository.findById(categoryId).get();
         if(questionFromDatabase.isPresent()){
@@ -67,17 +65,17 @@ public class QuestionServiceImplementation implements QuestionService {
             Question questionUpdated = questionRepository.save(questionFromDatabase.get());
             return Optional.of(questionMapper.questionToQuestionDto(questionUpdated));
         }
-        throw new QuestionNotFoundException("Question not found");
+        throw new RessourceNotFoundException("Question not found");
     }
 
     @Override
-    public void deleteQuestion(Long questionId) throws QuestionNotFoundException {
+    public void deleteQuestion(Long questionId) throws RessourceNotFoundException {
         Optional<Question> questionFromDatabase = questionRepository.findById(questionId);
         if(questionFromDatabase.isPresent()){
             questionRepository.delete(questionFromDatabase.get());
         }
         else{
-            throw new QuestionNotFoundException("Question not found");
+            throw new RessourceNotFoundException("Question not found");
         }
 
     }
@@ -89,12 +87,12 @@ public class QuestionServiceImplementation implements QuestionService {
     }
 
     @Override
-    public Optional<QuestionDto> getOneQuestion(Long questionId) throws QuestionNotFoundException {
+    public Optional<QuestionDto> getOneQuestion(Long questionId) throws RessourceNotFoundException {
 
         Optional<Question> questionFromDB = questionRepository.findById(questionId);
         if(questionFromDB.isPresent()){
             return Optional.of(questionMapper.questionToQuestionDto(questionFromDB.get()));
         }
-        throw new QuestionNotFoundException("Question not found");
+        throw new RessourceNotFoundException("Question not found");
     }
 }

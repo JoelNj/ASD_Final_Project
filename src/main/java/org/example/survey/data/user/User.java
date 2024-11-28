@@ -3,6 +3,7 @@ package org.example.survey.data.user;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.survey.model.Assesment;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,8 +24,11 @@ public class User implements UserDetails {
     private String lastName;
     private String username;
     private String password;
-    @Enumerated(EnumType.STRING)//to store the enum value as String
+    @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    private List<Assesment> assessments ;
 
     public User(String firstName, String lastName, String username, String password, Role role) {
         this.firstName = firstName;

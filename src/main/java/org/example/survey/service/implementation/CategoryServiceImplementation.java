@@ -3,7 +3,7 @@ package org.example.survey.service.implementation;
 import lombok.RequiredArgsConstructor;
 import org.example.survey.data.CategoryRepository;
 import org.example.survey.dto.CategoryDto;
-import org.example.survey.exception.user.CategoryNotFoundException;
+import org.example.survey.exception.user.RessourceNotFoundException;
 import org.example.survey.mapper.CategoryMapper;
 import org.example.survey.model.Category;
 import org.example.survey.service.CategoryService;
@@ -29,7 +29,7 @@ public class CategoryServiceImplementation implements CategoryService {
     }
 
     @Override
-    public Optional<CategoryDto> updatePartially(Integer categoryId, CategoryDto categoryDto) throws CategoryNotFoundException {
+    public Optional<CategoryDto> updatePartially(Integer categoryId, CategoryDto categoryDto) throws RessourceNotFoundException {
         Optional<Category> category = categoryRepository.findByCategoryId(categoryId);
         if(category.isPresent()){
             if(categoryDto.label()!=null){
@@ -41,11 +41,11 @@ public class CategoryServiceImplementation implements CategoryService {
             Category categorySaved =  categoryRepository.save(category.get());
             return Optional.of(categoryMapper.categoryToCategoryDto(categorySaved));
         }
-        throw new CategoryNotFoundException("Category not found");
+        throw new RessourceNotFoundException("Category not found");
     }
 
     @Override
-    public Optional<CategoryDto> update(Integer categoryId ,CategoryDto categoryDto) throws CategoryNotFoundException {
+    public Optional<CategoryDto> update(Integer categoryId ,CategoryDto categoryDto) throws RessourceNotFoundException {
         Optional<Category> category = categoryRepository.findByCategoryId(categoryId);
         if(category.isPresent()){
             category.get().setLabel(categoryDto.label());
@@ -53,17 +53,17 @@ public class CategoryServiceImplementation implements CategoryService {
             Category categorySaved =  categoryRepository.save(category.get());
             return Optional.of(categoryMapper.categoryToCategoryDto(categorySaved));
         }
-        throw new CategoryNotFoundException("Category not found");
+        throw new RessourceNotFoundException("Category not found");
     }
 
     @Override
-    public void deleteById(Integer categoryId) throws CategoryNotFoundException {
+    public void deleteById(Integer categoryId) throws RessourceNotFoundException {
         Optional<Category> categoryToDelete = categoryRepository.findByCategoryId(categoryId);
         if(categoryToDelete.isPresent()){
             categoryRepository.delete(categoryToDelete.get());
         }
         else{
-            throw new CategoryNotFoundException("Category not found ");
+            throw new RessourceNotFoundException("Category not found ");
         }
     }
 
@@ -75,11 +75,11 @@ public class CategoryServiceImplementation implements CategoryService {
 
 
     @Override
-    public Optional<CategoryDto> findByCategoryId(Integer categoryId) throws CategoryNotFoundException {
+    public Optional<CategoryDto> findByCategoryId(Integer categoryId) throws RessourceNotFoundException {
         Optional<Category> categoryDtoFromb = categoryRepository.findByCategoryId(categoryId);
         if(categoryDtoFromb.isPresent()){
             return Optional.of(categoryMapper.categoryToCategoryDto(categoryDtoFromb.get()));
         }
-        throw  new CategoryNotFoundException("Category not found message ");
+        throw  new RessourceNotFoundException("Category not found message ");
     }
 }

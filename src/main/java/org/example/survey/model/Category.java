@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Generated;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.example.survey.data.user.User;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ public class Category {
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Question> questions;
+
+
 
     public Category(String label, Integer numberOfQuestion) {
         this.label = label;

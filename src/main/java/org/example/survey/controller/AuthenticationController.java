@@ -1,10 +1,11 @@
-package edu.miu.cse.securitydemo.unsecured;
+package org.example.survey.controller;
 
-import edu.miu.cse.securitydemo.auth.AuthenticationRequest;
-import edu.miu.cse.securitydemo.auth.AuthenticationResponse;
-import edu.miu.cse.securitydemo.auth.AuthenticationService;
-import edu.miu.cse.securitydemo.auth.RegisterRequest;
+
 import lombok.RequiredArgsConstructor;
+import org.example.survey.auth.AuthenticationRequest;
+import org.example.survey.auth.AuthenticationResponse;
+import org.example.survey.auth.AuthenticationService;
+import org.example.survey.auth.RegisterRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
