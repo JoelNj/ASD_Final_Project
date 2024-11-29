@@ -1,7 +1,7 @@
 package org.example.survey.service.implementation;
 
 import lombok.RequiredArgsConstructor;
-import org.example.survey.data.CategoryRepository;
+import org.example.survey.repository.CategoryRepository;
 import org.example.survey.dto.CategoryDto;
 import org.example.survey.exception.user.RessourceNotFoundException;
 import org.example.survey.mapper.CategoryMapper;

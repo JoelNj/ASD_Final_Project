@@ -1,7 +1,7 @@
 package org.example.survey.auth;
 
 
-import org.example.survey.data.user.Role;
+import org.example.survey.permission.Role;
 
 public record RegisterRequest(
         String firstName,

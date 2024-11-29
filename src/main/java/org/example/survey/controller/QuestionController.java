@@ -3,6 +3,7 @@ package org.example.survey.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.survey.dto.QuestionDto;
+import org.example.survey.exception.user.RessourceNotFoundException;
 import org.example.survey.service.QuestionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,25 +29,25 @@ public class QuestionController {
     }
 
     @PutMapping("/{questionId}")
-    public ResponseEntity<QuestionDto> updateQuestion(@PathVariable Integer categoryId, @PathVariable Long questionId ,@RequestBody  QuestionDto questionDto) throws QuestionNotFoundException {
+    public ResponseEntity<QuestionDto> updateQuestion(@PathVariable Integer categoryId, @PathVariable Long questionId ,@RequestBody  QuestionDto questionDto) throws RessourceNotFoundException {
         Optional<QuestionDto> questionDtoFromService = questionService.updateQuestion(categoryId,questionId,questionDto) ;
         if(questionDtoFromService.isPresent()){
             return ResponseEntity.status(HttpStatus.OK).body(questionDtoFromService.get());
         }
-        throw  new QuestionNotFoundException("Question not found");
+        throw  new RessourceNotFoundException("Question not found");
     }
 
     @PatchMapping("/{questionId}")
-    public ResponseEntity<QuestionDto> updateQuestionPartially(@PathVariable Integer categoryId, @PathVariable Long questionId ,@RequestBody  QuestionDto questionDto) throws QuestionNotFoundException {
+    public ResponseEntity<QuestionDto> updateQuestionPartially(@PathVariable Integer categoryId, @PathVariable Long questionId ,@RequestBody  QuestionDto questionDto) throws RessourceNotFoundException {
         Optional<QuestionDto> questionDtoFromService = questionService.updatePartiallyQuestion(categoryId,questionId,questionDto) ;
         if(questionDtoFromService.isPresent()){
             return ResponseEntity.status(HttpStatus.OK).body(questionDtoFromService.get());
         }
-        throw  new QuestionNotFoundException("Question not found");
+        throw  new RessourceNotFoundException("Question not found");
     }
 
     @DeleteMapping("/{questionId}")
-    public ResponseEntity<Void> deleteQuestion(@PathVariable Long questionId) throws QuestionNotFoundException {
+    public ResponseEntity<Void> deleteQuestion(@PathVariable Long questionId) throws RessourceNotFoundException {
         questionService.deleteQuestion(questionId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -57,12 +58,12 @@ public class QuestionController {
     }
 
     @GetMapping("/{questionId}")
-    public ResponseEntity<QuestionDto> getOneQuestion(@PathVariable Long questionId) throws QuestionNotFoundException {
+    public ResponseEntity<QuestionDto> getOneQuestion(@PathVariable Long questionId) throws RessourceNotFoundException {
         Optional<QuestionDto> questionDtoFromDb = questionService.getOneQuestion(questionId);
         if(questionDtoFromDb.isPresent()){
             return ResponseEntity.status(HttpStatus.OK).body(questionDtoFromDb.get());
         }
-       throw  new QuestionNotFoundException("Question not found");
+       throw  new RessourceNotFoundException("Question not found");
     }
 
 }

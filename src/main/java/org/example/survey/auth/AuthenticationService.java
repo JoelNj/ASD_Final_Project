@@ -3,17 +3,14 @@ package org.example.survey.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.example.survey.config.JwtService;
-import org.example.survey.data.user.User;
-import org.example.survey.data.user.repository.UserRepository;
+import org.example.survey.model.User;
+import org.example.survey.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.security.Principal;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +40,7 @@ public class AuthenticationService {
         User registeredUser = userRepository.save(user);
         //generate token
         String token = jwtService.generateToken(registeredUser);
+
         return new AuthenticationResponse(token);
     }
 

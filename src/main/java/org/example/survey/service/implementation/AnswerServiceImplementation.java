@@ -1,8 +1,8 @@
 package org.example.survey.service.implementation;
 
 import lombok.RequiredArgsConstructor;
-import org.example.survey.data.AnswerRepository;
-import org.example.survey.data.QuestionRepository;
+import org.example.survey.repository.AnswerRepository;
+import org.example.survey.repository.QuestionRepository;
 import org.example.survey.dto.AnswerDto;
 import org.example.survey.exception.user.RessourceNotFoundException;
 import org.example.survey.mapper.AnswerMapper;

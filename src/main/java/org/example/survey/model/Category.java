@@ -2,10 +2,7 @@ package org.example.survey.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Generated;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.example.survey.data.user.User;
 
 import java.util.List;
 

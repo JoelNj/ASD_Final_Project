@@ -2,8 +2,8 @@ package org.example.survey.config;
 
 
 import lombok.RequiredArgsConstructor;
-import org.example.survey.data.user.Permission;
-import org.example.survey.data.user.Role;
+import org.example.survey.permission.Permission;
+import org.example.survey.permission.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -30,10 +30,11 @@ public class SecurityConfiguration {
                 csrf(CsrfConfigurer::disable)
                 .authorizeHttpRequests(
                         request ->
-                                request.requestMatchers("/api/v1/auth/*").permitAll()
+                                request.requestMatchers("/api/v1/auth/**").permitAll()
 //                                        .requestMatchers("/api/v1/auth/authenticate").permitAll()
-                                        .requestMatchers("/api/v1/admin/**").hasRole(Role.ADMIN.name())
-                                        .requestMatchers("/api/v1/management/**").hasAnyRole(Role.ADMIN.name(), Role.MEMBER.name())
+                                        .requestMatchers("/api/v1/categories/**").hasRole(Role.ADMIN.name())
+                                        .requestMatchers("/api/v1/categories/{categoryId}/questions").hasAnyRole(Role.ADMIN.name())
+                                        .requestMatchers("/api/v1/categories/{categoryId}/questions/{questionId}/answers").hasAnyRole(Role.ADMIN.name())
                                         .requestMatchers("/api/v1/management/member-only").hasAnyAuthority(
                                                 Permission.MEMBER_READ.getPermission(),
                                                 Permission.MEMBER_WRITE.getPermission()

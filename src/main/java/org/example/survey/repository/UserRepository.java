@@ -1,7 +1,7 @@
-package org.example.survey.data.user.repository;
+package org.example.survey.repository;
 
 
-import org.example.survey.data.user.User;
+import org.example.survey.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

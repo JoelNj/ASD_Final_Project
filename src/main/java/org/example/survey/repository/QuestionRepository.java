@@ -1,6 +1,5 @@
-package org.example.survey.data;
+package org.example.survey.repository;
 
-import org.example.survey.model.Category;
 import org.example.survey.model.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 

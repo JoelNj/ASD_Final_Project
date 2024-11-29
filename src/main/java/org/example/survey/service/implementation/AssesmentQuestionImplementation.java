@@ -1,10 +1,10 @@
 package org.example.survey.service.implementation;
 
 import lombok.RequiredArgsConstructor;
-import org.example.survey.data.AssesmentQuestionRepository;
-import org.example.survey.data.AssesmentRepository;
-import org.example.survey.data.QuestionRepository;
-import org.example.survey.dto.AssesmentQuestionDto;
+import org.example.survey.repository.AssesmentQuestionRepository;
+import org.example.survey.repository.AssesmentRepository;
+import org.example.survey.repository.QuestionRepository;
+import org.example.survey.dto.assesmentquestion.AssesmentQuestionDto;
 import org.example.survey.exception.user.RessourceNotFoundException;
 import org.example.survey.service.AssesmentQuestionService;
 import org.springframework.stereotype.Service;
@@ -16,13 +16,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AssesmentQuestionImplementation implements AssesmentQuestionService {
 
-    private  final AssesmentQuestionRepository assesmentQuestionRepository;
-    private final QuestionRepository questionRepository;
-    private final AssesmentRepository assesmentRepository;
+    private  final AssesmentQuestionRepository assesmentQuestionRepository; // Assesment question operations
+    private final QuestionRepository questionRepository;// List of Random 10 questions from database
+    private final AssesmentRepository assesmentRepository; // Filter my assesment based on id
 
 
     @Override
     public Optional<AssesmentQuestionDto> addAssesmentQuestion(Long assesmentId, AssesmentQuestionDto assesmentQuestionDto) {
+
 
         return Optional.empty();
     }

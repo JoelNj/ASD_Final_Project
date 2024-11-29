@@ -3,6 +3,7 @@ package org.example.survey.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.survey.dto.AnswerDto;
+import org.example.survey.exception.user.RessourceNotFoundException;
 import org.example.survey.service.AnswerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,25 +28,25 @@ public class AnswerController {
     }
 
     @PutMapping("/{answerId}")
-    public ResponseEntity<AnswerDto> updateAnswer(@PathVariable Long questionId , @PathVariable Long answerId ,@RequestBody  AnswerDto answerDto) throws CategoryNotFoundException {
+    public ResponseEntity<AnswerDto> updateAnswer(@PathVariable Long questionId , @PathVariable Long answerId ,@RequestBody  AnswerDto answerDto) throws RessourceNotFoundException {
         Optional<AnswerDto> answerDtoFromDb = answerService.updateAnswer(questionId, answerId, answerDto);
         if(answerDtoFromDb.isPresent()){
             return ResponseEntity.status(HttpStatus.OK).body(answerDtoFromDb.get());
         }
-        throw  new CategoryNotFoundException("Answer not found");
+        throw  new RessourceNotFoundException("Answer not found");
     }
 
     @PatchMapping("/{answerId}")
-    public ResponseEntity<AnswerDto> updateAnswerPartially(@PathVariable Long questionId , @PathVariable Long answerId ,@RequestBody  AnswerDto answerDto) throws CategoryNotFoundException {
+    public ResponseEntity<AnswerDto> updateAnswerPartially(@PathVariable Long questionId , @PathVariable Long answerId ,@RequestBody  AnswerDto answerDto) throws RessourceNotFoundException {
         Optional<AnswerDto> answerDtoFromDb = answerService.updateAnswerPartially(questionId, answerId, answerDto);
         if(answerDtoFromDb.isPresent()){
             return ResponseEntity.status(HttpStatus.OK).body(answerDtoFromDb.get());
         }
-        throw  new CategoryNotFoundException("Answer not found");
+        throw  new RessourceNotFoundException("Answer not found");
     }
 
     @DeleteMapping("/{answerId}")
-    public ResponseEntity<Void> deleteQuestion(@PathVariable Long answerId) throws CategoryNotFoundException {
+    public ResponseEntity<Void> deleteQuestion(@PathVariable Long answerId) throws RessourceNotFoundException {
         answerService.deleteAnswer(answerId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -55,11 +56,11 @@ public class AnswerController {
         return ResponseEntity.status(HttpStatus.OK).body(answerService.getAllAnswers().get());
     }
     @GetMapping("/{answerId}")
-    public ResponseEntity<AnswerDto> getOneAnswer(@PathVariable Long answerId) throws AnswerNotFoundException {
+    public ResponseEntity<AnswerDto> getOneAnswer(@PathVariable Long answerId) throws RessourceNotFoundException {
         Optional<AnswerDto> answerDtoFromDb = answerService.getOneAnswer(answerId);
         if(answerDtoFromDb.isPresent()){
             return ResponseEntity.status(HttpStatus.OK).body(answerDtoFromDb.get());
         }
-        throw  new AnswerNotFoundException("Answer not found");
+        throw  new RessourceNotFoundException("Answer not found");
     }
 }

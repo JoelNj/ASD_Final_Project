@@ -1,4 +1,4 @@
-package org.example.survey.data;
+package org.example.survey.repository;
 
 import org.example.survey.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;

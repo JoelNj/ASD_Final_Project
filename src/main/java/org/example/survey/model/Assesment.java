@@ -3,10 +3,8 @@ package org.example.survey.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.example.survey.data.user.User;
 
 import java.util.List;
-import java.util.Set;
 
 
 @Entity
@@ -27,7 +25,6 @@ public class Assesment {
 
     @OneToMany(mappedBy = "assesment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<AssesmentQuestion> assessmentQuestions;
-
 
 
 }

@@ -1,4 +1,4 @@
-package org.example.survey.data.user;
+package org.example.survey.permission;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -19,9 +19,11 @@ public class AssesmentQuestion {
     @ManyToOne(fetch = FetchType.LAZY)
     private Assesment assesment ;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Answer userAnswer ;
+
     private Boolean isTrue;
 
     private Boolean isResponded;
-
 
 }

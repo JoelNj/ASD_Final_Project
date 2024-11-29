@@ -1,7 +1,7 @@
 package org.example.survey.config;
 
 import lombok.RequiredArgsConstructor;
-import org.example.survey.data.user.repository.UserRepository;
+import org.example.survey.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
