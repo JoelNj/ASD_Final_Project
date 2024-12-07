@@ -26,11 +26,12 @@ public class AssesmentQuestionController {
     private final QuestionService questionService;
     private final UserRepository userRepository;
 
+    //a
+
     @PostMapping()
-    public ResponseEntity<?> addAssesmentQuestion(@PathVariable Long userId,
-                                                             @PathVariable Long assesmentId,
-                                                             @RequestBody RequestAssesmentQuestionDto requestAssesmentQues
-                                                  tionDto){
+    public ResponseEntity<?> addAssesmentQuestion(@PathVariable Long userId,@PathVariable Long assesmentId,@RequestBody RequestAssesmentQuestionDto requestAssesmentQuestionDto)
+
+    {
         User user = userRepository.findById(userId).orElseThrow();
         List<QuestionDto> listOfQuestionDto = questionService.getKRandomQuestionsBasedOnCategory(user.getCategory().getNumberOfQuestion()).get();
         for (QuestionDto questionDto : listOfQuestionDto) {
