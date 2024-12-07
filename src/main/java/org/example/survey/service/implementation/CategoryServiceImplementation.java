@@ -1,11 +1,12 @@
 package org.example.survey.service.implementation;
 
 import lombok.RequiredArgsConstructor;
+import org.example.survey.exception.RessourceNotFoundException;
 import org.example.survey.repository.CategoryRepository;
 import org.example.survey.dto.CategoryDto;
-import org.example.survey.exception.user.RessourceNotFoundException;
 import org.example.survey.mapper.CategoryMapper;
 import org.example.survey.model.Category;
+import org.example.survey.repository.UserRepository;
 import org.example.survey.service.CategoryService;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ public class CategoryServiceImplementation implements CategoryService {
 
     private final CategoryRepository categoryRepository ;
 
+
+
     @Override
     public Optional<CategoryDto>  add(CategoryDto categoryDto) {
         Category category = categoryMapper.categoryDtoToCategory(categoryDto);
@@ -29,7 +32,7 @@ public class CategoryServiceImplementation implements CategoryService {
     }
 
     @Override
-    public Optional<CategoryDto> updatePartially(Integer categoryId, CategoryDto categoryDto) throws RessourceNotFoundException {
+    public Optional<CategoryDto> updatePartially(Long categoryId, CategoryDto categoryDto) throws RessourceNotFoundException {
         Optional<Category> category = categoryRepository.findByCategoryId(categoryId);
         if(category.isPresent()){
             if(categoryDto.label()!=null){
@@ -45,7 +48,7 @@ public class CategoryServiceImplementation implements CategoryService {
     }
 
     @Override
-    public Optional<CategoryDto> update(Integer categoryId ,CategoryDto categoryDto) throws RessourceNotFoundException {
+    public Optional<CategoryDto> update(Long categoryId ,CategoryDto categoryDto) throws RessourceNotFoundException {
         Optional<Category> category = categoryRepository.findByCategoryId(categoryId);
         if(category.isPresent()){
             category.get().setLabel(categoryDto.label());
@@ -57,7 +60,7 @@ public class CategoryServiceImplementation implements CategoryService {
     }
 
     @Override
-    public void deleteById(Integer categoryId) throws RessourceNotFoundException {
+    public void deleteById(Long categoryId) throws RessourceNotFoundException {
         Optional<Category> categoryToDelete = categoryRepository.findByCategoryId(categoryId);
         if(categoryToDelete.isPresent()){
             categoryRepository.delete(categoryToDelete.get());
@@ -75,7 +78,7 @@ public class CategoryServiceImplementation implements CategoryService {
 
 
     @Override
-    public Optional<CategoryDto> findByCategoryId(Integer categoryId) throws RessourceNotFoundException {
+    public Optional<CategoryDto> findByCategoryId(Long categoryId) throws RessourceNotFoundException {
         Optional<Category> categoryDtoFromb = categoryRepository.findByCategoryId(categoryId);
         if(categoryDtoFromb.isPresent()){
             return Optional.of(categoryMapper.categoryToCategoryDto(categoryDtoFromb.get()));

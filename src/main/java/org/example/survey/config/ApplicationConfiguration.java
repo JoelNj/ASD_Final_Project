@@ -1,5 +1,6 @@
 package org.example.survey.config;
 
+
 import lombok.RequiredArgsConstructor;
 import org.example.survey.repository.UserRepository;
 import org.springframework.context.annotation.Bean;

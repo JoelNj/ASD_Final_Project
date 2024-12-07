@@ -1,13 +1,15 @@
 package org.example.survey.auth;
 
 
-import org.example.survey.permission.Role;
+import org.example.survey.model.Category;
+import org.example.survey.model.Role;
 
 public record RegisterRequest(
         String firstName,
         String lastName,
         String username,
         String password,
-        Role role
+        Role role,
+        Category category
 ) {
 }

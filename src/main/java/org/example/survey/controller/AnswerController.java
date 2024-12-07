@@ -3,7 +3,7 @@ package org.example.survey.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.survey.dto.AnswerDto;
-import org.example.survey.exception.user.RessourceNotFoundException;
+import org.example.survey.exception.RessourceNotFoundException;
 import org.example.survey.service.AnswerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

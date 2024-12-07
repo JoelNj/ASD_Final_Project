@@ -1,3 +1,5 @@
+
+
 plugins {
     java
     id("org.springframework.boot") version "3.3.5"
@@ -30,7 +32,6 @@ dependencies {
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation ("org.mapstruct:mapstruct:1.5.5.Final")
     annotationProcessor ("org.mapstruct:mapstruct-processor:1.5.5.Final")
     runtimeOnly("com.mysql:mysql-connector-j")
@@ -53,3 +54,8 @@ dependencyManagement {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+tasks.bootJar {
+    archiveBaseName.set("surveyApp")
+    archiveVersion.set("1.0.1")
+}
+

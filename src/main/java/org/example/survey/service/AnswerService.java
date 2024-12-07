@@ -1,7 +1,7 @@
 package org.example.survey.service;
 
 import org.example.survey.dto.AnswerDto;
-import org.example.survey.exception.user.RessourceNotFoundException;
+import org.example.survey.exception.RessourceNotFoundException;
 
 import java.util.List;
 import java.util.Optional;

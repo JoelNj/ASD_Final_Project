@@ -1,46 +1,63 @@
 package org.example.survey.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.survey.permission.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 
 @Entity(name = "users")
 @Data
 @NoArgsConstructor
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
     private String firstName;
     private String lastName;
     private String username;
     private String password;
-    @Enumerated(EnumType.STRING)
-    private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
-    private List<Assesment> assessments ;
-
-    public User(String firstName, String lastName, String username, String password, Role role) {
+    public User(String firstName, String lastName, String username, String password,Role role,Category category) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
+        this.category = category;
         this.role = role;
+    }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<Assesment> assesments = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Category category;
+    @Enumerated(EnumType.STRING)//to store the enum value as String
+    private Role role;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                '}';
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-//        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
-//        return authorities;
         return role.getAuthorities();
     }
 

@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 public class AssesmentQuestion {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
 
     @ManyToOne(fetch = FetchType.LAZY)

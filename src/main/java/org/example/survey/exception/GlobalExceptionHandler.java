@@ -1,6 +1,5 @@
 package org.example.survey.exception;
 
-import org.example.survey.exception.user.RessourceNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,10 +1,10 @@
 package org.example.survey.service.implementation;
 
 import lombok.RequiredArgsConstructor;
+import org.example.survey.exception.RessourceNotFoundException;
 import org.example.survey.repository.CategoryRepository;
 import org.example.survey.repository.QuestionRepository;
 import org.example.survey.dto.QuestionDto;
-import org.example.survey.exception.user.RessourceNotFoundException;
 import org.example.survey.mapper.QuestionMapper;
 import org.example.survey.model.Category;
 import org.example.survey.model.Question;
@@ -24,7 +24,7 @@ public class QuestionServiceImplementation implements QuestionService {
     private final QuestionRepository questionRepository;
 
     @Override
-    public Optional<QuestionDto> addQuestion(Integer categoryId , QuestionDto questionDto) {
+    public Optional<QuestionDto> addQuestion(Long categoryId , QuestionDto questionDto) {
         Category  category = categoryRepository.findById(categoryId).get();
         Question question = questionMapper.questionDtoToQuestion(questionDto);
         question.setCategory(category);
@@ -34,7 +34,7 @@ public class QuestionServiceImplementation implements QuestionService {
     }
 
     @Override
-    public Optional<QuestionDto> updateQuestion(Integer categoryId,Long questionId,
+    public Optional<QuestionDto> updateQuestion(Long categoryId,Long questionId,
                                                         QuestionDto questionDto)  throws RessourceNotFoundException {
         Category  category = categoryRepository.findById(categoryId).get();
         Optional<Question> questionFromDatabase = questionRepository.findById(questionId);
@@ -49,7 +49,7 @@ public class QuestionServiceImplementation implements QuestionService {
     }
 
     @Override
-    public Optional<QuestionDto> updatePartiallyQuestion(Integer categoryId,Long questionId,
+    public Optional<QuestionDto> updatePartiallyQuestion(Long categoryId,Long questionId,
                                                                  QuestionDto questionDto) throws RessourceNotFoundException {
         Optional<Question> questionFromDatabase = questionRepository.findById(questionId);
         Category category = categoryRepository.findById(categoryId).get();
@@ -94,5 +94,10 @@ public class QuestionServiceImplementation implements QuestionService {
             return Optional.of(questionMapper.questionToQuestionDto(questionFromDB.get()));
         }
         throw new RessourceNotFoundException("Question not found");
+    }
+
+    @Override
+    public Optional<List<QuestionDto>> getKRandomQuestionsBasedOnCategory( int k) throws RessourceNotFoundException {
+        return Optional.of(questionRepository.findRandomQuestion(k).stream().map(questionMapper::questionToQuestionDto).toList());
     }
 }

@@ -1,4 +1,4 @@
-package org.example.survey.permission;
+package org.example.survey.model;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

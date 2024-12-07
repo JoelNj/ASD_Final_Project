@@ -3,7 +3,7 @@ package org.example.survey.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.survey.dto.QuestionDto;
-import org.example.survey.exception.user.RessourceNotFoundException;
+import org.example.survey.exception.RessourceNotFoundException;
 import org.example.survey.service.QuestionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class QuestionController {
     private final QuestionService questionService ;
 
     @PostMapping
-    public ResponseEntity<QuestionDto> addQuestion(@PathVariable Integer categoryId,@RequestBody QuestionDto questionDto ){
+    public ResponseEntity<QuestionDto> addQuestion(@PathVariable Long categoryId,@RequestBody QuestionDto questionDto ){
         Optional<QuestionDto> questionCreated = questionService.addQuestion(categoryId,questionDto);
         if(questionCreated.isPresent()){
             return ResponseEntity.status(HttpStatus.CREATED).body(questionCreated.get());
@@ -29,7 +29,7 @@ public class QuestionController {
     }
 
     @PutMapping("/{questionId}")
-    public ResponseEntity<QuestionDto> updateQuestion(@PathVariable Integer categoryId, @PathVariable Long questionId ,@RequestBody  QuestionDto questionDto) throws RessourceNotFoundException {
+    public ResponseEntity<QuestionDto> updateQuestion(@PathVariable Long categoryId, @PathVariable Long questionId ,@RequestBody  QuestionDto questionDto) throws RessourceNotFoundException {
         Optional<QuestionDto> questionDtoFromService = questionService.updateQuestion(categoryId,questionId,questionDto) ;
         if(questionDtoFromService.isPresent()){
             return ResponseEntity.status(HttpStatus.OK).body(questionDtoFromService.get());
@@ -38,7 +38,7 @@ public class QuestionController {
     }
 
     @PatchMapping("/{questionId}")
-    public ResponseEntity<QuestionDto> updateQuestionPartially(@PathVariable Integer categoryId, @PathVariable Long questionId ,@RequestBody  QuestionDto questionDto) throws RessourceNotFoundException {
+    public ResponseEntity<QuestionDto> updateQuestionPartially(@PathVariable Long categoryId, @PathVariable Long questionId ,@RequestBody  QuestionDto questionDto) throws RessourceNotFoundException {
         Optional<QuestionDto> questionDtoFromService = questionService.updatePartiallyQuestion(categoryId,questionId,questionDto) ;
         if(questionDtoFromService.isPresent()){
             return ResponseEntity.status(HttpStatus.OK).body(questionDtoFromService.get());

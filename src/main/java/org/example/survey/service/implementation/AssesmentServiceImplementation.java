@@ -1,8 +1,9 @@
 package org.example.survey.service.implementation;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.survey.dto.AssesmentDto;
-import org.example.survey.exception.user.RessourceNotFoundException;
+import org.example.survey.exception.RessourceNotFoundException;
 import org.example.survey.mapper.AssesmentMapper;
 import org.example.survey.model.Assesment;
 import org.example.survey.model.Category;
@@ -23,12 +24,13 @@ public class AssesmentServiceImplementation implements AssesmentService {
     private final AssesmentRepository assesmentRepository;
     private final UserRepository userRepository;
 
-
+    @Transactional
     @Override
     public Optional<AssesmentDto> addAssesment(Long userId,AssesmentDto assesmentDto) {
         Assesment assesment = assesmentMapper.assesmentDtoToAssesment(assesmentDto);
         User user = userRepository.findById(userId).get();
         assesment.setUser(user);
+        assesment.setResult("started");
         Assesment savedAssesment = assesmentRepository.save(assesment);
         return Optional.of(assesmentMapper.assesmentToAssesmentDto(savedAssesment));
     }

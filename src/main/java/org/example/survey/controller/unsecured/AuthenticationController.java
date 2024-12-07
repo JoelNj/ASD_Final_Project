@@ -1,4 +1,4 @@
-package org.example.survey.controller;
+package org.example.survey.controller.unsecured;
 
 
 import lombok.RequiredArgsConstructor;
@@ -19,19 +19,13 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest registerRequest) {
-
         AuthenticationResponse authenticationResponse = authenticationService.register(registerRequest);
-        if (authenticationResponse!=null){
-            return ResponseEntity.status(HttpStatus.CREATED).body(authenticationResponse);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
-
+        return ResponseEntity.status(HttpStatus.CREATED).body(authenticationResponse);
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
         AuthenticationResponse authenticationResponse = authenticationService.authenticate(authenticationRequest);
-
         return ResponseEntity.ok(authenticationResponse);
     }
 }

@@ -3,7 +3,7 @@ package org.example.survey.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.survey.dto.CategoryDto;
-import org.example.survey.exception.user.RessourceNotFoundException;
+import org.example.survey.exception.RessourceNotFoundException;
 import org.example.survey.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +31,7 @@ public class CategoryController {
         }
     }
     @PutMapping("/{categoryId}")
-    public ResponseEntity<CategoryDto> updateCategory(@PathVariable Integer categoryId,@RequestBody  CategoryDto categoryDto) throws RessourceNotFoundException {
+    public ResponseEntity<CategoryDto> updateCategory(@PathVariable Long categoryId,@RequestBody  CategoryDto categoryDto) throws RessourceNotFoundException {
 
         Optional<CategoryDto> categoryDtoFromService = categoryService.update(categoryId,categoryDto);
         if(categoryDtoFromService.isPresent()){
@@ -40,7 +40,7 @@ public class CategoryController {
         throw  new RessourceNotFoundException("Category not found");
     }
     @PatchMapping("/{categoryId}")
-    public ResponseEntity<CategoryDto> updatePartiallyCategory(@PathVariable Integer categoryId,@RequestBody CategoryDto categoryDto) throws RessourceNotFoundException {
+    public ResponseEntity<CategoryDto> updatePartiallyCategory(@PathVariable Long categoryId,@RequestBody CategoryDto categoryDto) throws RessourceNotFoundException {
 
         Optional<CategoryDto> categoryDtoFromService = categoryService.updatePartially(categoryId,categoryDto);
         if(categoryDtoFromService.isPresent()){
@@ -49,7 +49,7 @@ public class CategoryController {
         throw  new RessourceNotFoundException("Category not found");
     }
     @DeleteMapping("/{categoryId}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable  Integer categoryId) throws RessourceNotFoundException {
+    public ResponseEntity<Void> deleteCategory(@PathVariable  Long categoryId) throws RessourceNotFoundException {
         Optional<CategoryDto> categoryDtoFromDb = categoryService.findByCategoryId(categoryId);
         if(categoryDtoFromDb.isPresent()){
             categoryService.deleteById(categoryId);
@@ -64,7 +64,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<CategoryDto> getOneCategory(@PathVariable Integer categoryId) throws RessourceNotFoundException {
+    public ResponseEntity<CategoryDto> getOneCategory(@PathVariable Long categoryId) throws RessourceNotFoundException {
         Optional<CategoryDto> categoryDtoFromDb = categoryService.findByCategoryId(categoryId);
         if(categoryDtoFromDb.isPresent()){
             return ResponseEntity.ok(categoryDtoFromDb.get());

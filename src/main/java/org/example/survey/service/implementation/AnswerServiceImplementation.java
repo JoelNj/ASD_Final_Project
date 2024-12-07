@@ -1,13 +1,15 @@
 package org.example.survey.service.implementation;
 
 import lombok.RequiredArgsConstructor;
+import org.example.survey.exception.RessourceNotFoundException;
+import org.example.survey.model.User;
 import org.example.survey.repository.AnswerRepository;
 import org.example.survey.repository.QuestionRepository;
 import org.example.survey.dto.AnswerDto;
-import org.example.survey.exception.user.RessourceNotFoundException;
 import org.example.survey.mapper.AnswerMapper;
 import org.example.survey.model.Answer;
 import org.example.survey.model.Question;
+import org.example.survey.repository.UserRepository;
 import org.example.survey.service.AnswerService;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ public class AnswerServiceImplementation  implements AnswerService {
      private final QuestionRepository questionRepository;
      private final  AnswerRepository answerRepository;
      private final AnswerMapper answerMapper ;
+     private final UserRepository userRepository;
 
     @Override
     public Optional<AnswerDto> addAnswer(Long questionId, AnswerDto answerDto) {

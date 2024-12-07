@@ -1,5 +1,6 @@
 package org.example.survey.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -13,13 +14,14 @@ import java.util.List;
 public class Assesment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private User user;
 
-    private String result;
+    private String result; // new - not started - started - completed
 
     private Double percentage;
 
