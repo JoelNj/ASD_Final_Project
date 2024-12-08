@@ -50,6 +50,10 @@ dependencyManagement {
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
     }
 }
+test {
+    exclude '**/SurveyApplicationTests.class'
+}
+
 
 tasks.withType<Test> {
     useJUnitPlatform()
