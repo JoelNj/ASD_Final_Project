@@ -35,16 +35,4 @@ public class SurveyApplication {
         SpringApplication.run(SurveyApplication.class, args);
     }
 
-    @Bean
-    public CommandLineRunner commandLineRunner(UserRepository userRepository,CategoryRepository categoryRepository) {
-        return args -> {
-            Optional<Category> category = categoryRepository.findByLabel("Computer Science");
-            if (!category.isPresent()) {
-                categoryRepository.save(new Category("Computer Science",2));
-
-            }
-        };
-    }
-
-
 }
