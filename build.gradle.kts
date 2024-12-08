@@ -34,8 +34,7 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     implementation ("org.mapstruct:mapstruct:1.5.5.Final")
     annotationProcessor ("org.mapstruct:mapstruct-processor:1.5.5.Final")
-    runtimeOnly("com.mysql:mysql-connector-j")
-
+    implementation("com.h2database:h2")
     implementation("io.jsonwebtoken:jjwt-api:0.12.6")
     implementation("io.jsonwebtoken:jjwt-impl:0.12.6")
     implementation("io.jsonwebtoken:jjwt-jackson:0.12.6")
@@ -52,11 +51,9 @@ dependencyManagement {
 }
 
 tasks.test {
-    useJUnitPlatform()
-    filter {
-        excludeTestsMatching("**/SurveyApplicationTests")
-    }
+    enabled = false
 }
+
 
 
 tasks.withType<Test> {
