@@ -12,6 +12,7 @@ import org.mapstruct.Mapping;
 public interface AssesmentMapper {
 
     @Mapping(source = "assesmentDto.user",target="user" )
+    @Mapping(target = "assessmentQuestions", ignore = true)
     @Transactional
     Assesment assesmentDtoToAssesment (AssesmentDto assesmentDto);
 

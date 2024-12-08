@@ -17,7 +17,10 @@ public interface AssesmentQuestionMapper {
     ResponseAssesmentQuestionDto assesmentQuestionToResponseAssesmentQuestionDto(AssesmentQuestion assesmentQuestion);
 
 
-
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "question", ignore = true)
+    @Mapping(target = "assesment", ignore = true)
+    @Mapping(target = "userAnswer", ignore = true)
     AssesmentQuestion requestAssesmentQuestionDtoToAssesmentQuestion(RequestAssesmentQuestionDto requestAssesmentQuestionDto);
 
 

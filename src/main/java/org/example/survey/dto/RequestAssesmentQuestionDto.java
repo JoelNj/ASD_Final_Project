@@ -1,4 +1,6 @@
 package org.example.survey.dto;
 
-public record RequestAssesmentQuestionDto(Boolean isTrue,Boolean isResponded) {
+import org.example.survey.model.Assesment;
+
+public record RequestAssesmentQuestionDto( Boolean isTrue, Boolean isResponded) {
 }
