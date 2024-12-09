@@ -29,10 +29,23 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SurveyApplication {
 
-
+    private final CategoryRepository categoryRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(SurveyApplication.class, args);
     }
+
+
+    @Bean
+    public CommandLineRunner run() {
+        return args -> {
+            Optional<Category>  category = categoryRepository.findByLabel("Computer Science");
+            if (!category.isPresent()) {
+                 categoryRepository.save(new Category("Computer science",10));
+            }
+        };
+    }
+
+
 
 }
